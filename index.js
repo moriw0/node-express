@@ -1,9 +1,18 @@
+const fs = require('fs');
 const express = require("express");
 const app = express();
 
+app.use(express.urlencoded({ extended: true}));
+
 app.get("/", (req, res) => {
-  console.log(__dirname);
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/index.html")
+});
+
+app.post("/autumn", (req, res) => {
+  fs.writeFile(__dirname + "/data.txt",
+  req.body.activity, () => {
+    res.send("投稿完了");
+  });
 });
 
 app.listen(5000, function() {
